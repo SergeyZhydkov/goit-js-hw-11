@@ -18,7 +18,8 @@ async function hendlerSearch(evt) {
   refs.gallery.innerHTML = '';
   refs.loadMoreBtn.classList.add('hidden');
   evt.preventDefault();
-  dataInput = refs.searchInput.value.trim();
+
+  dataInput = evt.target.searchQuery.value.trim();
   if (!dataInput) {
     Notify.info('Pleasure Input Search images...');
     evt.target.reset();
