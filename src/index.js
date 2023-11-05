@@ -19,8 +19,8 @@ async function hendlerSearch(evt) {
   refs.loadMoreBtn.classList.add('hidden');
   evt.preventDefault();
 
-  dataInput = evt.target.searchQuery.value.trim();
-  if (!dataInput) {
+  searchInput = evt.target.searchQuery.value.trim();
+  if (!searchInput) {
     Notify.info('Pleasure Input Search images...');
     evt.target.reset();
     return;
@@ -32,7 +32,7 @@ async function hendlerSearch(evt) {
 async function renderOnSearch() {
   try {
     page = 1;
-    const arreyGetCard = await getCard(dataInput, page);
+    const arreyGetCard = await getCard(searchInput, page);
     if (arreyGetCard.data.totalHits != 0) {
       Notify.success(`Hooray! We found ${arreyGetCard.data.totalHits} images.`);
       refs.loadMoreBtn.classList.remove('hidden');
@@ -56,7 +56,7 @@ async function renderOnSearch() {
 async function hendlerLoadMore() {
   page += 1;
   try {
-    const resp = await getCard(dataInput, page);
+    const resp = await getCard(searchInput, page);
     if (
       Math.ceil(resp.data.totalHits / 40) === page ||
       resp.data.totalHits < 40
