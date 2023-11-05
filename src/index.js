@@ -11,6 +11,7 @@ export const refs = {
 };
 refs.loadMoreBtn.classList.add('hidden');
 let page = 1;
+let dataInput = '';
 refs.form.addEventListener('submit', hendlerSearch);
 refs.loadMoreBtn.addEventListener('click', hendlerLoadMore);
 
@@ -19,8 +20,8 @@ async function hendlerSearch(evt) {
   refs.loadMoreBtn.classList.add('hidden');
   evt.preventDefault();
 
-  searchInput = evt.target.searchQuery.value.trim();
-  if (!searchInput) {
+  dataInput = evt.target.searchQuery.value.trim();
+  if (!dataInput) {
     Notify.info('Pleasure Input Search images...');
     evt.target.reset();
     return;
@@ -32,7 +33,7 @@ async function hendlerSearch(evt) {
 async function renderOnSearch() {
   try {
     page = 1;
-    const arreyGetCard = await getCard(searchInput, page);
+    const arreyGetCard = await getCard(dataInput, page);
     if (arreyGetCard.data.totalHits != 0) {
       Notify.success(`Hooray! We found ${arreyGetCard.data.totalHits} images.`);
       refs.loadMoreBtn.classList.remove('hidden');
@@ -56,7 +57,7 @@ async function renderOnSearch() {
 async function hendlerLoadMore() {
   page += 1;
   try {
-    const resp = await getCard(searchInput, page);
+    const resp = await getCard(dataInput, page);
     if (
       Math.ceil(resp.data.totalHits / 40) === page ||
       resp.data.totalHits < 40
